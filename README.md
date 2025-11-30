@@ -2,7 +2,7 @@
 
 > Bộ Docker setup tối ưu cho môi trường Production Laravel, hỗ trợ **2,000+ concurrent requests** với khả năng horizontal scaling.
 
-## 📋 Mục Lục
+## Mục Lục
 
 - [Tính Năng Chính](#-tính-năng-chính)
 - [Kiến Trúc Hệ Thống](#-kiến-trúc-hệ-thống)
@@ -20,40 +20,40 @@
 
 ---
 
-## ✨ Tính Năng Chính
+## Tính Năng Chính
 
-### 🚀 Performance
-- ⚡ **2,000+ concurrent requests** với PHP-FPM dynamic process manager
-- 🔥 **OPcache + JIT compilation** (PHP 8.1)
-- 💾 **Redis caching** cho session, cache, và queue
-- 📊 **MySQL query optimization** với buffer pool tuning
-- 🌐 **Nginx với HTTP/2** và keepalive optimization
+### Performance
+- **2,000+ concurrent requests** với PHP-FPM dynamic process manager
+- **OPcache + JIT compilation** (PHP 8.1)
+- **Redis caching** cho session, cache, và queue
+- **MySQL query optimization** với buffer pool tuning
+- **Nginx với HTTP/2** và keepalive optimization
 
-### 🔒 Security
-- 🔐 **Docker Secrets** cho credential management
-- 🛡️ **Security headers** (X-Frame-Options, CSP, HSTS)
-- 🚫 **Rate limiting** cho API endpoints
-- 🔑 **Redis protected mode** với password authentication
-- 📝 **Disabled dangerous commands** (FLUSHALL, KEYS, CONFIG)
-- 🔒 **MySQL access restrictions** với internal network
+### Security
+- **Docker Secrets** cho credential management
+- **Security headers** (X-Frame-Options, CSP, HSTS)
+- **Rate limiting** cho API endpoints
+- **Redis protected mode** với password authentication
+- **Disabled dangerous commands** (FLUSHALL, KEYS, CONFIG)
+- **MySQL access restrictions** với internal network
 
-### 📊 Monitoring & Logging
-- 📈 **Comprehensive logging** (Nginx, PHP-FPM, MySQL)
-- 🔍 **Slow query detection** (MySQL + PHP-FPM)
-- 💓 **Health checks** cho tất cả services
-- 📉 **Resource monitoring** với Docker stats
-- 🔄 **Automatic log rotation** với retention policy
+### Monitoring & Logging
+- **Comprehensive logging** (Nginx, PHP-FPM, MySQL)
+- **Slow query detection** (MySQL + PHP-FPM)
+- **Health checks** cho tất cả services
+- **Resource monitoring** với Docker stats
+- **Automatic log rotation** với retention policy
 
-### 🔄 DevOps Ready
-- 🤖 **GitHub Actions CI/CD** pipeline
-- 🐳 **Multi-stage builds** cho production images
-- 📦 **Container orchestration** với Docker Compose
-- 🔀 **Horizontal scaling** support với load balancer
-- 🔧 **Zero-downtime deployment** strategy
+### DevOps Ready
+- **GitHub Actions CI/CD** pipeline
+- **Multi-stage builds** cho production images
+- **Container orchestration** với Docker Compose
+- **Horizontal scaling** support với load balancer
+- **Zero-downtime deployment** strategy
 
 ---
 
-## 🏗️ Kiến Trúc Hệ Thống
+## Kiến Trúc Hệ Thống
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -100,7 +100,7 @@
 
 ---
 
-## 💻 Yêu Cầu Hệ Thống
+## Yêu Cầu Hệ Thống
 
 ### Minimum Requirements (Development)
 - **CPU**: 2 cores
@@ -122,12 +122,12 @@
 
 ---
 
-## 🚀 Cài Đặt Nhanh
+## Cài Đặt Nhanh
 
 ### Bước 1: Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/laravel-production.git
+git clone https://github.com/caovanson2121231267312/docker-autoscale-highload.git
 cd laravel-production
 ```
 
@@ -338,7 +338,7 @@ docker-compose logs -f --tail=50
 
 ### Performance Tuning Presets
 
-#### 🔹 Small Server (2-4GB RAM)
+#### Small Server (2-4GB RAM)
 **Use case:** Development, staging, low traffic (<500 concurrent)
 
 ```env
@@ -355,7 +355,7 @@ innodb_buffer_pool_size = 1G
 max_connections = 200
 ```
 
-#### 🔹 Medium Server (8-16GB RAM) - **Recommended**
+#### Medium Server (8-16GB RAM) - **Recommended**
 **Use case:** Production, medium traffic (500-2000 concurrent)
 
 ```env
@@ -372,7 +372,7 @@ innodb_buffer_pool_size = 3G
 max_connections = 500
 ```
 
-#### 🔹 Large Server (16GB+ RAM)
+#### Large Server (16GB+ RAM)
 **Use case:** High traffic (2000-5000+ concurrent)
 
 ```env
@@ -490,7 +490,7 @@ sudo crontab -e
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Manual Deployment
 
@@ -539,42 +539,42 @@ curl -f http://localhost/health || echo "Deployment failed!"
 
 set -e
 
-echo "🚀 Starting zero-downtime deployment..."
+echo "Starting zero-downtime deployment..."
 
 # 1. Build new images
-echo "📦 Building new images..."
+echo "Building new images..."
 docker-compose build php nginx
 
 # 2. Start new PHP containers alongside old ones
-echo "🔄 Scaling up PHP containers..."
+echo "Scaling up PHP containers..."
 docker-compose up -d --no-deps --scale php=4 php
 
 # 3. Wait for new containers to be healthy
-echo "⏳ Waiting for health checks..."
+echo "Waiting for health checks..."
 sleep 30
 
 # 4. Run migrations on new containers
-echo "🗄️ Running migrations..."
+echo "Running migrations..."
 docker-compose exec -T php php artisan migrate --force
 
 # 5. Switch nginx to new containers (update upstream)
-echo "🔀 Switching traffic..."
+echo "Switching traffic..."
 docker-compose up -d --force-recreate nginx
 
 # 6. Scale down old PHP containers
-echo "📉 Scaling down old containers..."
+echo "Scaling down old containers..."
 docker-compose up -d --no-deps --scale php=2 php
 
 # 7. Final optimization
-echo "⚡ Optimizing caches..."
+echo "Optimizing caches..."
 docker-compose exec -T php php artisan optimize
 docker-compose exec -T php php artisan config:cache
 
 # 8. Cleanup
-echo "🧹 Cleaning up old images..."
+echo "Cleaning up old images..."
 docker image prune -f
 
-echo "✅ Deployment completed successfully!"
+echo "Deployment completed successfully!"
 ```
 
 **Sử dụng:**
@@ -669,7 +669,7 @@ docker-compose up -d
 
 ---
 
-## 📈 Scaling
+## Scaling
 
 ### Vertical Scaling (Tăng Resources)
 
@@ -889,7 +889,7 @@ Edit `config/database.php`:
 
 ---
 
-## 📊 Monitoring & Logging
+## Monitoring & Logging
 
 ### Real-time Monitoring
 
@@ -1454,7 +1454,7 @@ find "$BACKUP_DIR" -name "*-monthly.sql.gz" -mtime +365 -delete
 
 ---
 
-## 🔥 Performance Testing
+## Performance Testing
 
 ### Load Testing với Apache Bench
 
@@ -1604,7 +1604,7 @@ Transfer/sec:      2.74MB
 #!/bin/bash
 # scripts/benchmark.sh
 
-echo "🚀 Starting Performance Benchmark"
+echo "Starting Performance Benchmark"
 echo "=================================="
 
 # Test 1: Homepage
@@ -1629,7 +1629,7 @@ ab -n 10000 -c 1000 -k http://localhost/ | grep -E "Requests per second|Time per
 
 echo ""
 echo "=================================="
-echo "✅ Benchmark Completed"
+echo "Benchmark Completed"
 ```
 
 ### Optimization Tips based on Test Results
@@ -1658,7 +1658,7 @@ echo "✅ Benchmark Completed"
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -1952,7 +1952,7 @@ APP_DEBUG=false
 #!/bin/bash
 # scripts/diagnose.sh
 
-echo "🔍 System Diagnostics"
+echo "System Diagnostics"
 echo "===================="
 
 echo ""
@@ -1998,7 +1998,7 @@ docker-compose exec redis redis-cli -a $(cat secrets/redis_password.txt) ping
 
 echo ""
 echo "===================="
-echo "✅ Diagnostics Complete"
+echo "Diagnostics Complete"
 ```
 
 **Run diagnostics:**
@@ -2009,7 +2009,7 @@ chmod +x scripts/diagnose.sh
 
 ---
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
 ### 1. Secrets Management
 
@@ -2242,7 +2242,7 @@ docker-compose exec php apk update && apk upgrade
 
 ---
 
-## ❓ FAQ
+## FAQ
 
 ### Q: Làm sao để scale application lên 10,000 concurrent users?
 
@@ -2437,7 +2437,7 @@ docker-compose restart nginx php
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
 ### Documentation
 - [Docker Documentation](https://docs.docker.com/)
@@ -2461,7 +2461,7 @@ docker-compose restart nginx php
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please:
 
@@ -2472,13 +2472,13 @@ Contributions are welcome! Please:
 
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License.
 
 ---
 
-## 💬 Support
+## Support
 
 - **Issues**: [GitHub Issues](https://github.com/yourusername/laravel-production/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/yourusername/laravel-production/discussions)
@@ -2486,7 +2486,7 @@ This project is licensed under the MIT License.
 
 ---
 
-## ⭐ Star History
+## Star History
 
 If you find this project helpful, please give it a star ⭐
 
