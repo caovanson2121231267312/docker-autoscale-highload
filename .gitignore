@@ -1,0 +1,5 @@
+secrets/
+.env
+logs/
+mysql-data/
+redis-data/

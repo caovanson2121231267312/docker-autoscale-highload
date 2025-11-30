@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  # Load Balancer
+  nginx-lb:
+    image: nginx:1.25-alpine
+    container_name: nginx-lb
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/lb.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - nginx-1
+      - nginx-2
+    networks:
+      - frontend
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Nginx Instance 1
+  nginx-1:
+    extends:
+      file: docker-compose.yml
+      service: nginx
+    container_name: nginx-1
+    ports: []
+    
+  # Nginx Instance 2
+  nginx-2:
+    extends:
+      file: docker-compose.yml
+      service: nginx
+    container_name: nginx-2
+    ports: []
+
+  # PHP-FPM Instances (scale as needed)
+  php-1:
+    extends:
+      file: docker-compose.yml
+      service: php
+    container_name: php-1
+    
+  php-2:
+    extends:
+      file: docker-compose.yml
+      service: php
+    container_name: php-2
